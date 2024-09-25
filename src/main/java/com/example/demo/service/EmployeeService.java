@@ -2,8 +2,10 @@ package com.example.demo.service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Employee;
@@ -75,11 +77,25 @@ public class EmployeeService implements EmployeeServiceInterface
 	}
 
 	@Override
-	public void deleteEmpById(Long empidL) 
+	public void deleteEmpById(Long empidL) throws EmptyResultDataAccessException 
 	{
+		
+		 if (empidL == null) {
+		        throw new BusinessException("608", "Employee ID is null, cannot delete.");
+		    }
+
 		try 
 		{
-			crudRepo.deleteById(empidL);
+			
+			
+            Optional<Employee> employee = crudRepo.findById(empidL);
+            if (!employee.isPresent()) 
+            {
+                throw new BusinessException("609", "No employee found with ID: " + empidL);
+            }
+
+			
+			
 		} 
 		catch (IllegalArgumentException e) 
 		{

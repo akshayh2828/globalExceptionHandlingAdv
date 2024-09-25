@@ -90,7 +90,7 @@ public class EmployeeController
 		}
 		catch (Exception e) 
 		{
-			ControllerException ce=new ControllerException("611","somthing wrong in controller");
+			ControllerException ce=new ControllerException("612","somthing wrong in controller");
 			return new ResponseEntity<ControllerException>(ce, HttpStatus.CREATED);
 		}
 		
