@@ -89,13 +89,15 @@ public class EmployeeService implements EmployeeServiceInterface
 			
 			
             Optional<Employee> employee = crudRepo.findById(empidL);
+            System.out.println(employee);
             if (!employee.isPresent()) 
             {
                 throw new BusinessException("609", "No employee found with ID: " + empidL);
             }
 
 			
-			
+            crudRepo.deleteById(empidL);
+
 		} 
 		catch (IllegalArgumentException e) 
 		{
